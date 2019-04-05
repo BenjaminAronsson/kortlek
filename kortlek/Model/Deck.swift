@@ -11,13 +11,30 @@ import Foundation
 class Deck {
     var cards = [Card]()
     
-    let ranksss = ["heart", "diamond", ""]
     let suites = ["♥", "♠", "♦", "♣"]
     let ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
     
     init() {
         newDeck()
     }
+    
+    enum typeOfSuite : String {
+        case spades = "♠"
+        case hearts = "♥"
+        case clubs = "♣"
+        case diamonds = "♦"
+    }
+    
+    func getRemainingFromSuites(suite : typeOfSuite) -> [Card] {
+        var selectedCards = [Card]()
+        for card in cards {
+            if card.suite == suite.rawValue {
+                selectedCards.append(card)
+            }
+        }
+        return selectedCards
+    }
+    
     
     //creates new deck
     func newDeck() {
@@ -29,12 +46,17 @@ class Deck {
         }
     }
     
-    func drawTopCard() -> Card {
-        let topCard = cards.removeFirst()
-        return topCard
+    func drawTopCard() -> Card? {
+        if cards.count > 0 {
+            let topCard = cards.removeFirst()
+            return topCard
+        }
+        else {
+            return nil
+        }
     }
     
     func shuffleCard() {
-        
+        cards.shuffle()
     }
 }
